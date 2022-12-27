@@ -1,38 +1,33 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactSlice';
 import { nanoid } from 'nanoid';
-import { saveToLocalStorage } from 'services/localStorageServices';
+import {
+  useAddContactMutation,
+  useGetContactsQuery,
+} from 'services/contactsApi';
 import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const { data: contacts = [] } = useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
-  useEffect(() => {
-    saveToLocalStorage(contacts);
-  }, [contacts]);
-
-  // const handleChange = evt => {
-  //   const { name, value } = evt.target;
-  //   if (name === 'name') {
-  //     setName(value);
-  //   }
-  //   if (name === 'number') {
-  //     setNumber(value);
-  //   }
-  // };
-
-  const handleSubmit = evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault();
     const form = evt.target;
     const name = form.name.value;
     const number = form.number.value;
-    
+
     if (contacts.find(cont => cont.name === name)) {
       alert(`${name} is already in contacts`);
     } else {
-      dispatch(addContact({ name, number, id: nanoid() }));
+      try {
+        await addContact({
+          id: nanoid(),
+          name,
+          number,
+        });
+      } catch (error) {
+        alert(`Failed! Save error`);
+      }
+
       form.reset();
     }
   };

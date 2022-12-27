@@ -1,8 +1,9 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { useSelector } from 'react-redux';
+import { useGetContactsQuery } from 'services/contactsApi';
 
 export const ContactsList = () => {
-  const contacts = useSelector(state => state.contacts.items);
+  const { data: contacts = [] } = useGetContactsQuery();
   const filter = useSelector(state => state.filter);
   const viewContacts = contacts
     .filter(cont => cont.name.toLowerCase().includes(filter))
