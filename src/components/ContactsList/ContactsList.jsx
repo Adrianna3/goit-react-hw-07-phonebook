@@ -11,8 +11,8 @@ export const ContactsList = () => {
   return (
     <div>
       <ul>
-        {viewContacts.map(({ id, name, number }) => (
-          <ContactItem key={id} id={id} name={name} number={number} />
+        {viewContacts.map(({ id, name, phone }) => (
+          <ContactItem key={id} id={id} name={name} phone={phone} />
         ))}
       </ul>
     </div>

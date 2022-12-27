@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import styles from './ContactItem.module.css';
 import { useDeleteContactMutation } from 'services/contactsApi';
 
-export const ContactItem = ({ id, name, number }) => {
+export const ContactItem = ({ id, name, phone }) => {
   const { contactItem__btn } = styles;
   const [deleteContact] = useDeleteContactMutation();
   return (
     <li>
       <span>
-        {name}: {number}
+        {name}: {phone}
         <button
           type="button"
           className={contactItem__btn}
@@ -26,5 +26,5 @@ export const ContactItem = ({ id, name, number }) => {
 ContactItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 };

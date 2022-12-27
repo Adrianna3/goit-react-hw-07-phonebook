@@ -13,7 +13,7 @@ export const ContactForm = () => {
     evt.preventDefault();
     const form = evt.target;
     const name = form.name.value;
-    const number = form.number.value;
+    const phone = form.phone.value;
 
     if (contacts.find(cont => cont.name === name)) {
       alert(`${name} is already in contacts`);
@@ -22,7 +22,7 @@ export const ContactForm = () => {
         await addContact({
           id: nanoid(),
           name,
-          number,
+          phone,
         });
       } catch (error) {
         alert(`Failed! Save error`);
@@ -53,11 +53,11 @@ export const ContactForm = () => {
         />
       </label>
       <label className={contactForm__label}>
-        Number
+        Phone
         <input
           className={contactForm__input}
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
